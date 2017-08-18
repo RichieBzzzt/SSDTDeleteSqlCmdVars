@@ -24,6 +24,7 @@ Write-Verbose 'Generating Deployment Script...' -Verbose
 $script = "$logs\$targetDatabaseName.GenerateDeployScript.sql"
 $ScriptRedacted = "$logs\$targetDatabaseName.Redacted.GenerateDeployScript.sql"
 $dacServices.GenerateDeployScript($dacPackage, $targetDatabaseName, $dacProfile.DeployOptions) | Out-File $script
+#new bit
 $myFileReader = New-Object System.IO.StreamReader -Arg $script
 $myFileWriter = [System.IO.StreamWriter] $ScriptRedacted
 $ScriptRedactedFileName = Split-Path $ScriptRedacted -leaf
@@ -40,5 +41,6 @@ $myFileReader.Close()
 $myFileWriter.Close()
 Remove-Item $script -Force | Out-Null
 Rename-Item -Path $ScriptRedacted -NewName $ScriptFileName
+#end of new bit
 $msg = "Deployment Script Created at $script"
 
